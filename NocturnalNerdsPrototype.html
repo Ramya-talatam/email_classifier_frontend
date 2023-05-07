@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+        body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      .popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 2px solid red;
+        padding: 20px;
+        background-color: white;
+        z-index: 9999;
+      }
+      
+      .popup-close {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        font-size: 20px;
+        font-weight: bold;
+        background-color: white;
+        border: none;
+        cursor: pointer;
+      }
+      nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  nav li {
+    margin-left: 1em;
+  }
+      /* Hide the popup initially */
+      .hidden {
+        display: none;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        background-color: #383838;
+        color: white;
+        padding: 20px;
+      }
+      
+      h1 {
+        margin-top: 0;
+      }
+      
+      form {
+        margin: 20px 0;
+        text-align: center;
+      }
+      
+      label {
+        font-size: 1.2em;
+        font-weight: bold;
+      }
+      
+      select {
+        border-radius: 5px;
+        font-size: 1.2em;
+        margin-left: 10px;
+        padding: 5px;
+      }
+      
+      
+      
+      table {
+        align-items: center;
+        border-collapse: collapse;
+        margin: 20px auto;
+        width: 80%;
+      }
+      
+      th {
+        background-color: #4CAF50;
+        color: white;
+        font-size: 1.2em;
+        font-weight: bold;
+        padding: 10px;
+        text-align: left;
+      }
+      
+      td {
+        border-bottom: 1px solid #ddd;
+        font-size: 1.2em;
+        padding: 10px;
+      }
+      
+      tr:hover {
+        background-color: #f5f5f5;
+      }
+      a{
+        color: whitesmoke;
+      }
+      .email-timestamp {
+			font-size: 12px;
+			color: #aaa;
+			margin-top: 5px;
+		}
+        .email-content {
+			font-size: 14px;
+			color: #888;
+            max-width: 200px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			margin-top: 5px;
+		}
+      button{
+        padding: 0.5em 1em;
+        display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  background-color: #f1f1f1;
+  color: black;
+  font-size: 1.2em;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+button:hover {
+  background-color: black;
+  color: white;
+}
+    </style>
+    <script>
+      function filterEmails() {
+        var priority = document.getElementById("priority").value;
+        var rows = document.getElementsByTagName("tr");
+        for (var i = 1; i < rows.length; i++) {
+          var row = rows[i];
+          var cells = row.getElementsByTagName("td");
+          var cell = cells[3]; 
+          var cellValue = cell.textContent.toLowerCase();
+          
+          if (priority == "" || cellValue == priority.toLowerCase()) {
+            row.style.display = "";
+          } else {
+            row.style.display = "none";
+          }
+        }
+      }
+      function showEmergency() {
+        var popup = document.getElementById("emergency-popup");
+        popup.classList.remove("hidden");
+      }
+      function showSpam() {
+        var popup = document.getElementById("spam-popup");
+        popup.classList.remove("hidden");
+      }
+      function hideSpam() {
+        var popup = document.getElementById("spam-popup");
+        popup.classList.add("hidden");
+      }
+      function hideEmergency() {
+        var popup = document.getElementById("emergency-popup");
+        popup.classList.add("hidden");
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+        <h1>GLANCE</h1>
+        <nav>
+            <ul>
+              <li><a href="#">Write</a></li>
+              <li><a href="#">Spam</a></li>
+              <li><a href="#">Archives</a></li>
+              <li><a href="#">Help</a></li>
+            </ul>
+          </nav>
+          <button onclick="showEmergency()">Check Emergency Mails</button>
+          <button onclick="showSpam()">Unsubscription recommendations</button>
+          <button>Create custom tag</button>
+    </header>
+    <form>
+      <label for="priority">Filter by priority:</label>
+      <select id="priority" onchange="filterEmails()">
+        <option value="">All</option>
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option>
+      </select>
+    </form>
+    
+    <h2 style="text-align:center">Inbox</h2>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>From</th>
+          <th>Subject</th>
+          <th>Content</th>
+          <th>Priority</th>
+          <th>Time</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>qtrairways@example.com</td>
+          <td>Exciting offer</td>
+          <td class="email-content">earn upto 5,000 bonus avios-Us</td>
+          <td style="color:green;">Low</td>
+          <td class="email-timestamp">1:45 PM</td>
+        </tr>
+        <tr>
+          <td>sarahlee@example.com</td>
+          <td>Happy Birthday!</td>
+          <td class="email-content">Happy birthday dear wish you good luck!</td>
+          <td style="color: orangered;">High</td>
+          <td class="email-timestamp">1:45 PM</td>
+        </tr>
+        <tr>
+          <td>ramya@example.com</td>
+          <td>Update on project</td>
+          <td class="email-content">Dear team, Everyone report the new security patch build srs documents by tomorrow.</td>
+          <td style="color: orangered;">High</td>
+          <td class="email-timestamp">1:45 PM</td>
+        </tr>
+        <tr>
+          <td>pooja@example.com</td>
+          <td>Important: Meeting at 2pm</td>
+          <td class="email-content">Dear team, make sure to atten client's meeting today.</td>
+          <td style="color: orange;">Medium</td>
+          <td class="email-timestamp">1:45 PM</td>
+        </tr>
+
+        
+        <tr>
+            <td>naresh@abc.com</td>
+            <td>Server Down</td>
+            <td class="email-content">Hello team, our web server went down so work on it</td>
+            <td style="color: orangered;">High</td>
+            <td class="email-timestamp">1:45 PM</td>
+          </tr>
+        <tr>
+            <td>pavan84@xyz.com</td>
+            <td>srs</td>
+            <td class="email-content">here is the srs document copy from last week</td>
+            <td style="color: orange;">Medium</td>
+            <td class="email-timestamp">1:45 PM</td>
+          </tr>
+        <tr>
+            <td>ggleads@g.com</td>
+            <td>advertisements</td>
+            <td class="email-content">get noticed with ggl ads by paying only 20,000</td>
+            <td style="color:green;">Low</td>
+            <td class="email-timestamp">1:45 PM</td>
+          </tr>
+
+          <tr>
+            <td>imartclearning@abc.com</td>
+            <td>Huge Discount</td>
+            <td class="email-content">hurry up only few seats left</td>
+            <td style="color:green;">Low</td>
+            <td class="email-timestamp">1:45 PM</td>
+          </tr>
+          
+          <tr>
+            <td>system@mil.com</td>
+            <td>Feedback</td>
+            <td class="email-content">PLease share your feedback on recent experience</td>
+            <td style="color: orange;">Medium</td>
+            <td class="email-timestamp">1:45 PM</td>
+          </tr>
+          <tr>
+            <td>cryudo@xyz.com</td>
+            <td>master backend</td>
+            <td class="email-content">learn backend with our courses</td>
+            <td style="color:green;">Low</td>
+            <td class="email-timestamp">1:45 PM</td>
+          </tr>
+          <tr>
+            <td>janemary@mail.com</td>
+            <td>Reminder: Submit Timesheet</td>
+            <td class="email-content">good afternoon, submit the timesheet asap. see instructions below.</td>
+            <td style="color: orange;">Medium</td>
+            <td class="email-timestamp">1:45 PM</td>
+          </tr>
+          <tr>
+            <td>system@mail.com</td>
+            <td>survey form</td>
+            <td class="email-content">Dear valued memeber, improve us by filling this form </td>
+            <td style="color: orange;">Medium</td>
+            <td class="email-timestamp">1:45 PM</td>
+          </tr>
+          <tr>
+            <td>adube@mail.com</td>
+            <td>adube pdf</td>
+            <td class="email-content">make editing pdfs easy with our new adub app</td>
+            <td style="color:green;">Low</td>
+            <td class="email-timestamp">1:45 PM</td>
+          </tr>
+      </tbody>
+    </table>
+    <div id="emergency-popup" class="popup hidden">
+        <button class="popup-close" onclick="hideEmergency()">X</button>
+        <h2>Emergency Email!</h2>
+        <p>New email from CEO regarding urgent matter. Please check immediately.</p>
+      </div>
+      <div id="spam-popup" class="popup hidden">
+        <button class="popup-close" onclick="hideSpam()">X</button>
+        <h2>Unsubscription recommendations</h2>
+        <p>Save time and space by Unsubscribing to the following uninterested promotion mails</p>
+        <p>1.XYZ news letter</p>
+        <p>2.ABC cosmetics</p>
+        <p>3.PQR shopping</p>
+      </div>
+  </body>
+</html>
